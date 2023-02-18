@@ -1,0 +1,22 @@
+server:
+  port: 8081
+
+spring:
+  cloud:
+    function:
+      definition: invoice;
+    stream:
+      bindings:
+        invoice-in-0:
+          destination: invoice.topic
+          consumer:
+            use-native-decoding: true
+      kafka:
+        bindings:
+          invoice-in-0:
+            consumer:
+              configuration:
+                value:
+                  deserializer: com.jfjara.kafkaproducer.invoice.infrastructure.kafka.serializer.InvoiceDeserializer
+        binder:
+          brokers: localhost:9092
