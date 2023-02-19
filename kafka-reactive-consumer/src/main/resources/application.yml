@@ -1,0 +1,24 @@
+server:
+  port: 8081
+
+spring:
+  cloud:
+    function:
+      definition: invoice;
+    stream:
+      bindings:
+        invoice-in-0:
+          destination: invoice.topic
+#          consumer:
+#            use-native-decoding: true
+      kafka:
+        bindings:
+          invoice-in-0:
+            consumer:
+              configuration:
+                max.poll.records: 10
+                spring.json.trusted.packages: "*"
+                value:
+                  deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+        binder:
+          brokers: localhost:9092

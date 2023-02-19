@@ -1,0 +1,22 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    function:
+      definition: invoice;
+    stream:
+      bindings:
+        invoice-out-0:
+          destination: invoice.topic
+#          producer:
+#            useNativeEncoding: true
+      kafka:
+        bindings:
+          invoice-out-0:
+            producer:
+              configuration:
+                value:
+                  serializer: org.springframework.kafka.support.serializer.JsonSerializer
+        binder:
+          brokers: localhost:9092
